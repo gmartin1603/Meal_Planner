@@ -1,22 +1,22 @@
-{
-    "id":"4",
+[{
     "Title": "Instant Pot Spicy Chicken Tacos",
     "Servings": "6",
-    "PREP TIME": "20 MINS",
-    "TOTAL TIME": "55 MINS",
-    "INGREDIENTS": {
-        "boneless skinless chicken breasts": "1 lb.",
-        "low-sodium chicken broth": "1/2 c.",
-        "hot sauce": "1/8 c.",
-        "kosher salt": "3/4 tsp.",
-        "chili powder": "1/2 tsp.",
-        "ground cumin": "1/2 tsp.",
-        "garlic powder": "1/2 tsp.",
-        "freshly ground black pepper": "1/4 tsp."
-    },
-    "DIRECTIONS": {
-        "1": "In a 6-quart Instant Pot add chicken, diced tomatoes, broth, hot sauce, and seasonings. Lock lid and set to Pressure Cook on High for 12 minutes.",
-        "2": "Follow manufacturer’s guide for quick release, making sure to wait until cycle is complete before unlocking and removing lid. Shred chicken with two forks.",
-        "3": "Use a slotted spoon to serve chicken on tortillas with desired toppings."
-    }
+    "Prep": "20 MINS",
+    "Total": "55 MINS",
+    "Ingredients":[
+        "boneless skinless chicken breasts 1 lb." ,
+        "low-sodium chicken broth 1/2 c." ,
+        "hot sauce 1/8 c." ,
+        "kosher salt 3/4 tsp." ,
+        "chili powder 1/2 tsp." ,
+        "ground cumin 1/2 tsp." ,
+        "garlic powder 1/2 tsp." ,
+        "freshly ground black pepper 1/4 tsp."
+    ],
+    "Directions": [
+        "1 In a 6-quart Instant Pot add chicken, diced tomatoes, broth, hot sauce, and seasonings. Lock lid and set to Pressure Cook on High for 12 minutes.",
+        "2 Follow manufacturer’s guide for quick release, making sure to wait until cycle is complete before unlocking and removing lid. Shred chicken with two forks.",
+        "3 Use a slotted spoon to serve chicken on tortillas with desired toppings."
+    ]
 }
+]
