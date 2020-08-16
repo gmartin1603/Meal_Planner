@@ -16,7 +16,5 @@ Create a web app that will take user recipie data and output a meal plan for a g
 <h3>Technical Requirements</h3>
 <ul>
 <li>Use React.js for frontend</li>
-<li>Use node.js for backend API calls</li>
-<li>Express framework</li>
-<li>Recipes in data.json file</li>
+<li>Use Cloud Firestore for backend</li>
 </ul>
