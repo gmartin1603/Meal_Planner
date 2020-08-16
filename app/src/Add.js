@@ -1,34 +1,34 @@
 import React, { Component } from "react";
 import './Add.css'
 import firebase from './firebase';
+// import { database } from "firebase";
 
 /*
-TODO: function to convert baking unit to ozs
-TODO: function to bulid recipe to add to firestore
 DONE: complete addDirection function
-TODO: list directions as they are added
+DONE: list directions as they are added
 DONE: complete addIngredient function
-TODO: list ingredients as they are added to side
+DONE: list ingredients as they are added to side
 TODO: clear form on submit
 DONE: clear ingredient form after add
 DONE: clear direction after add
-TODO: function to push new recipe to firestore
+DONE: function to push new recipe to firestore
+
+Recipe card format preview?
 */
 
-const ingredientsList = []
-const directionsList = []
+const db = firebase.firestore()
+const docRef = db.collection("users").doc("george").collection("recipes")
 
 class AddForm extends Component {
   constructor(props) {
     super (props);
     this.state = { 
       title: "",
-      servings: 0,
-      prep: 0,
-      ingredient: "",
-      qty: 0,
-      unit: null,
-      direction: "",
+      servings: null,
+      prep: null,
+      cook: null,
+      ingredients: [],
+      directions: [],
       step: 1
      }
     }
@@ -41,23 +41,51 @@ class AddForm extends Component {
     })
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(this.state);
+  handleSubmit = () => {
+    docRef.doc(this.state.title).set({
+      "title": this.state.title,
+      "servings": this.state.servings,
+      "prep-time": this.state.prep,
+      "cook-time": this.state.cook,
+      "ingredients": this.state.ingredients,
+      "directions": this.state.directions,
+    })
+    .then( () => {
+      console.log("Document Successfully Written!");
+    })
+    .catch( (error) => {
+      console.error("Error writing doc: ", error);
+    })
+    this.clearForm()
+  }
+
+  clearForm = () => {
+    this.setState({ 
+      title: "",
+      servings: null,
+      prep: null,
+      cook: null,
+      ingredients: [],
+      directions: [],
+      step: 1
+     });
+    document.getElementById("title").value = ""
+    document.getElementById("servings").value = null
+    document.getElementById("prep").value = null
+    document.getElementById("cook").value = null
   }
   
   addIngredient = (e) => {
     e.preventDefault();
     const ingredient = {
-      ingredient: this.state.ingredient,
-      qty: this.state.qty,
-      unit: this.state.unit
+      name: document.getElementById("ingr").value,
+      qty: document.getElementById("qty").value,
+      unit: document.getElementById("unit").value
     }
-    ingredientsList.push(ingredient)
+    this.state.ingredients.push(ingredient)
     document.getElementById("ingr").value = ""
     document.getElementById("qty").value = ""
     document.getElementById("unit").value = null
-    console.log(ingredientsList) 
   }
 
   addDirection = (e) => {
@@ -65,48 +93,78 @@ class AddForm extends Component {
     this.setState({step: this.state.step+1})
     const direction = {
       step: this.state.step,
-      direction: this.state.direction
+      direction: document.getElementById("direction").value
     }
-    directionsList.push(direction)
+    this.state.directions.push(direction)
     document.getElementById("direction").value = ""
-    console.log(directionsList)
+    
   }
+
+  deleteDirection = (step) => {
+    //TODO
+  }
+  
   
  
   render() {
     return (
-      <div className="container">
+      <div className="main">
         <h2>Add Recipe</h2>
-        <form onSubmit={this.handleSubmit}>
+      <div className="container">
+        <form>
         <label>
           Title:
-          <input name="title" type="text" onChange={this.handleChange} />
+          <input name="title" id="title" type="text" onChange={this.handleChange} />
           Servings:
-          <input name="servings" type="number" onChange={this.handleChange} />
+          <input name="servings" id="servings" type="number" onChange={this.handleChange} />
           Prep Time (Mins):
-          <input name="prep" type="number" onChange={this.handleChange} />
+          <input name="prep" id="prep" type="number" onChange={this.handleChange} />
+          Cook Time (Mins):
+          <input name="cook" id="cook" type="number" onChange={this.handleChange} />
         </label>
         <label>
         Ingedients: 
         </label> 
-          <input id="ingr" name="ingredient" placeholder="Ingredient" type="text" onChange={this.handleChange} />
-          <input id="qty" name="qty" type="number" placeholder="Quantity" onChange={this.handleChange}></input>
-          <select id="unit" name="unit" onChange={this.handleChange}>
+          <input id="ingr" name="ingredient" placeholder="Ingredient" type="text"  />
+          <input id="qty" name="qty" type="number" placeholder="Quantity" ></input>
+          <select id="unit" name="unit" >
             <option value="null">Unit of Measure</option>
             <option value="C">C</option>
             <option value="tsp">tsp</option>
             <option value="tbsp">tbsp</option>
             <option value="oz">oz</option>
             <option value="lb">lb</option>
+            <option value="whole">Whole</option>
           </select>
         <button type="submit" onClick={this.addIngredient}>Add Ingredient</button>
         <label>
           Directions: 
         </label> 
-          <input id="direction" name="direction" placeholder="Direction" type="text" onChange={this.handleChange} />
+          <input id="direction" name="direction" placeholder="Direction" type="text" />
           <button type="submit" onClick={this.addDirection}>Add Direction</button>
-          <input type="submit" value="Submit"/>
+          
         </form>
+      </div>
+      <div className="card">
+        <div className="card-title">Title: <p>{this.state.title}</p></div>
+        <div className="card-servings">Servings: <p>{this.state.servings}</p></div>
+        <div className="card-prep">Prep Time (Mins): <p>{this.state.prep}</p></div>
+        <div className="card-cook">Cook Time (Mins): <p>{this.state.cook}</p></div>
+        <ul className="ingredients-list">Ingredients:
+        {
+        this.state.ingredients.map(i => (
+            <li key={i.name} className="card-ingredients">{i.name+" "+i.qty+i.unit+"."}</li>
+        ))}
+        </ul>
+        <ul className="directions-list">Directions:
+        {
+        this.state.directions.map((d) => (
+            <li key={d.step} className="card-directions">{`${d.step+". "+d.direction}`} </li>
+        ))}
+        </ul>
+        <button type="submit" onClick={this.handleSubmit}>Save Recipe</button>
+      </div>
+
       </div>
     );
   }

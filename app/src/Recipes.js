@@ -46,16 +46,16 @@ class Recipes extends Component {
       <div className="container">
         <div className="recipes">
           <h2>Recipes</h2>
+          <ul>
             {
               this.state.recipes &&
               this.state.recipes.map( recipes => {
                 return (
-                  <div>
-                    <p>{recipes.title}</p>
-                  </div>
-                )
-              })
-            }
+                    <li key={recipes.title}>{recipes.title}</li>
+                    )
+                  })
+                }
+          </ul>
         </div>
       </div>
     )
