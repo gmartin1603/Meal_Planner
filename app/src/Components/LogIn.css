@@ -1,0 +1,26 @@
+.sign-up-form {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.auth-form {
+    width: 25%;
+    background-color: lightgray;
+    margin-top: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px, solid, black;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+    10px 10px 15px rgba(0,0,0,0.5),
+    -1px -1px 10px rgba(0,0,0,0.2);
+}
+
+input, button {
+    margin: 5px;
+}
+
+#forgot-pass {
+    font-size: 10px;
+    margin-left: 20px;
+}

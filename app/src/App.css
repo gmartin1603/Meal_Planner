@@ -48,28 +48,9 @@ nav a:hover, .active {
 }
 
 
-.search-container {
-    display: flex;
-    align-items: flex-end;
-    width: 20%;
-    
-}
 
-.search {
-    margin: 10px;
-    margin-right: 50px;
-    border: 1px solid purple;
-    border-radius: 10px;
-    color: purple;
-    background-color: transparent;
-    width: 80px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-}
 
-.search:focus {
-    width: 80%;
-  }
+
 
 
 
