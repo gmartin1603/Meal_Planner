@@ -17,5 +17,5 @@ Create a web app that will take user recipie data and output a meal plan for a g
 <ul>
   <li>Use React.js for frontend</li>
   <li>Use Cloud Firestore for backend</li>
-  <li>Useing Firebase Authentication</li>
+  <li>Using Firebase Authentication</li>
 </ul>
