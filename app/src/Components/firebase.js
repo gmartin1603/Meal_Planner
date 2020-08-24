@@ -14,11 +14,5 @@ var firebaseConfig = {
   };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.auth().onAuthStateChanged(user => {
-  if (user){
-    return user
-  } else {
-    console.log("no user signed in")
-  }
-}) 
+
 export default firebase;

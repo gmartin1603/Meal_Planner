@@ -36,6 +36,7 @@ class AddForm extends Component {
 
   componentDidMount() {
     document.getElementById("title").focus()
+    //gets user email and sets it in state to use for writting to the correct firestore collection
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -54,6 +55,7 @@ class AddForm extends Component {
     })
   }
 
+  //buiilds the new recipe doc and writes it to the users firestore collection
   handleSubmit = () => {
     docRef.doc(this.state.email).collection("recipes").doc(this.state.title).set({
       "title": this.state.title,
@@ -69,9 +71,11 @@ class AddForm extends Component {
     .catch( (error) => {
       console.error("Error writing doc: ", error);
     })
+    //clear form after submission
     this.clearForm()
   }
 
+  //reset form to blank
   clearForm = () => {
     this.setState({ 
       title: "",
@@ -89,6 +93,7 @@ class AddForm extends Component {
     document.getElementById("title").focus()
   }
 
+  //capitalizes each word of ingredients 
   capitalize =(str) => {
     str = str.split(" ");
 
@@ -101,12 +106,14 @@ class AddForm extends Component {
   
   addIngredient = (e) => {
     e.preventDefault();
+    //builds individual ingredient object
     const ingredient = {
       name: this.capitalize(document.getElementById("ingr").value),
       qty: document.getElementById("qty").value,
       unit: document.getElementById("unit").value
-    }
+    } //"pushes" the created object to the state.ingredients array
     this.setState({ingredients: [...this.state.ingredients, ingredient]})
+    //clears ingredient form and puts focus on "ingr" field
     document.getElementById("ingr").value = ""
     document.getElementById("qty").value = ""
     document.getElementById("unit").value = null
@@ -115,16 +122,19 @@ class AddForm extends Component {
 
   ingredientDisabled = () => {
     if (document.getElementById("ingr").value === ""){
-      document.getElementById("ingr-submit").disabled = true
+      document.getElementById("ingr-save").disabled = true
     }
     else {
       document.getElementById("ingr").disabled = false
     }
   }
 
+  //same theory as addIngredient
   addDirection = (e) => {
     e.preventDefault();
+    //increments this.state.step by 1 everytime a direction is added
     this.setState({step: this.state.step+1})
+    //individual directions are stored as objects
     const direction = {
       step: this.state.step,
       direction: document.getElementById("direction").value
@@ -149,7 +159,6 @@ class AddForm extends Component {
         <form className="add-form">
         <label>
           Title:
-        
           <input name="title" id="title" type="text" onChange={this.handleChange} />
         </label>
         <label>
@@ -177,6 +186,7 @@ class AddForm extends Component {
             <option value="oz">oz</option>
             <option value="lb">lb</option>
             <option value="whole">Whole</option>
+            <option value="pinch">Pinch</option>
           </select>
         <button id="ingr-save" type="submit" onClick={this.addIngredient}>Add Ingredient</button>
         <label>
@@ -193,13 +203,13 @@ class AddForm extends Component {
         <div className="card-prep">Prep Time (Mins): <p>{this.state.prep}</p></div>
         <div className="card-cook">Cook Time (Mins): <p>{this.state.cook}</p></div>
         <ul className="ingredients-list">Ingredients:
-        {
+        { //renders ingredients as they are added to state
         this.state.ingredients.map(i => (
             <li key={i.name} className="card-ingredients">{i.name+" "+i.qty+i.unit+"."}</li>
         ))}
         </ul>
         <ul className="directions-list">Directions:
-        {
+        { //renders directions as they are added to state
         this.state.directions.map((d) => (
             <li key={d.step} className="card-directions">{`${d.step+". "+d.direction}`} </li>
         ))}
