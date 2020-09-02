@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import logo from './images/logo_transparent.png'
+import React, { useState, useEffect } from "react";
+import logo from '../images/logo_transparent.png'
 import {
     NavLink,
 } from "react-router-dom";
@@ -11,7 +11,7 @@ import firebase from './firebase';
 const auth = firebase.auth();
 
 
-class Navbar extends Component {
+const Navbar = () => {
     constructor(props) {
         super(props)
         this.state = { 
@@ -23,24 +23,25 @@ class Navbar extends Component {
             error: null
         }
     }
-
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [displayName, setDisplayName] = useState('')
 
     
-    componentDidMount(){
+    useEffect( () => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                this.setState({
-                    loggedIn: true,
-                    displayName: user.displayName
-                })
+                    setLoggedIn(true),
+                    setDisplayName(user.displayName)   
             }
             else {
                 return
             }
         })
-    }
+    })
 
-    logOut = () => {
+    const logOut = () => {
         auth.signOut().then(() => {
             this.setState(
                 { loggedIn: false }
@@ -50,44 +51,41 @@ class Navbar extends Component {
     }
 
     
+    if (loggedIn === true) {
+        return (
+            //renders if user is logged in
+            <header>
+                <div className="logo">
+                    <img alt="Logo" src={logo}></img>
+                </div>
 
-    render() {
-        if (this.state.loggedIn === true) {
-            return (
-                //renders if user is logged in
-                <header>
-                    <div className="logo">
-                        <img alt="Logo" src={logo}></img>
-                    </div>
+                <nav className="nav-container">
+                    <div> <NavLink exact to="/">Home</NavLink></div>
+                    <div className="logged-in"> <NavLink to="/Recipes">Recipes</NavLink></div>
+                    <div className="logged-in"> <NavLink to="/Grocery-List">Grocery List</NavLink></div>
+                    <div className="logged-in"> <NavLink to="/Add">Add Recipe</NavLink></div>
+                    <div className="logged-in" id="message">Hi, {displayName}</div>
+                    <div className="logged-in"> <button onClick={logOut} >Log Out</button></div>   
+                </nav>    
+            </header>
+        )
+    } else {
+        return (
+            //renders if no user is logged in
+            <header>
+                <div className="logo">
+                    <img alt="Logo" src={logo}></img>
+                </div>
 
-                    <nav className="nav-container">
-                        <div> <NavLink exact to="/">Home</NavLink></div>
-                        <div className="logged-in"> <NavLink to="/Recipes">Recipes</NavLink></div>
-                        <div className="logged-in"> <NavLink to="/Grocery-List">Grocery List</NavLink></div>
-                        <div className="logged-in"> <NavLink to="/Add">Add Recipe</NavLink></div>
-                        <div className="logged-in" id="message">Hi, {this.state.displayName}</div>
-                        <div className="logged-in"> <button onClick={this.logOut} >Log Out</button></div>   
-                    </nav>    
-                </header>
-            )
-        } else {
-            return (
-                //renders if no user is logged in
-                <header>
-                    <div className="logo">
-                        <img alt="Logo" src={logo}></img>
-                    </div>
-
-                    <nav className="nav-container">
-                        <div> <NavLink exact to="/">Home</NavLink></div>
-                        <div className="logged-out"> <NavLink to="/LogIn" >Log In</NavLink></div>
-                        <div className="logged-out"> <NavLink to="/SignUp" >Sign Up</NavLink></div>
-                        
-                    </nav>    
-                </header>
-            )
-        }
-    }   
+                <nav className="nav-container">
+                    <div> <NavLink exact to="/">Home</NavLink></div>
+                    <div className="logged-out"> <NavLink to="/LogIn" >Log In</NavLink></div>
+                    <div className="logged-out"> <NavLink to="/SignUp" >Sign Up</NavLink></div>
+                    
+                </nav>    
+            </header>
+        )
+    }  
 }
 
 export default Navbar;
