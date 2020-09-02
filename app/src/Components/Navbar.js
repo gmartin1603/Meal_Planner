@@ -12,27 +12,15 @@ const auth = firebase.auth();
 
 
 const Navbar = () => {
-    constructor(props) {
-        super(props)
-        this.state = { 
-            loggedIn: false,
-            email: "",
-            displayName: "",
-            showModal: false,
-            loading: false,
-            error: null
-        }
-    }
+    
     const [loggedIn, setLoggedIn] = useState(false)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [displayName, setDisplayName] = useState('')
 
     
     useEffect( () => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                    setLoggedIn(true),
+                    setLoggedIn(true)
                     setDisplayName(user.displayName)   
             }
             else {
@@ -43,9 +31,7 @@ const Navbar = () => {
 
     const logOut = () => {
         auth.signOut().then(() => {
-            this.setState(
-                { loggedIn: false }
-            )
+            setLoggedIn(false)  
             console.log("Sign out successful")
         })
     }
