@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
  
-class GroceryList extends Component {
-  render() {
+const GroceryList = () => {
+  
     return (
       <div>
         <h2>HELLO</h2>
@@ -15,7 +15,7 @@ class GroceryList extends Component {
         <p>Duis a turpis sed lacus dapibus elementum sed eu lectus.</p>
       </div>
     );
-  }
+  
 }
  
 export default GroceryList;

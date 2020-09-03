@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
@@ -11,10 +11,7 @@ import Recipe from './Components/Recipe';
 
 import "./App.css";
 
-class App extends Component {
-  
-  
-  render() {
+const App = () => {
 
     return (
       <BrowserRouter>
@@ -30,7 +27,7 @@ class App extends Component {
         </div>
       </BrowserRouter>
     );
-  }
+  
 }
 
 export default App;

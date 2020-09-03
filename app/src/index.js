@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { Context } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import firebase from './Components/firebase'
+
+const auth = firebase.auth()
+
+const userStatus = () => {
+  auth.onAuthStateChanged(user => {
+  if (user) {
+          setLoggedIn(true)
+          setDisplayName(user.displayName)   
+  }
+  else {
+      return
+  }
+})
+}
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <userStatus.provider >
+      <App />
+    </userStatus.provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
