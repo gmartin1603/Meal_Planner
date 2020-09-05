@@ -9,7 +9,6 @@ import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import Recipe from './Components/Recipe';
 
-import "./App.css";
 
 const App = () => {
 

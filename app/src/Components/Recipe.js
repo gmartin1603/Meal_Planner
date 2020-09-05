@@ -3,3 +3,8 @@ import React from 'react'
 // import Recipes from './Recipes'
 
 
+const Recipe = () => {
+
+}
+
+export default Recipe

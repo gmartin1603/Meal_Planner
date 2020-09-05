@@ -3,28 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from './Components/firebase'
+import { ThemeContextProvider } from './context/themeContext';
 
-const auth = firebase.auth()
-
-const userStatus = () => {
-  auth.onAuthStateChanged(user => {
-  if (user) {
-          setLoggedIn(true)
-          setDisplayName(user.displayName)   
-  }
-  else {
-      return
-  }
-})
-}
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <userStatus.provider >
+    <ThemeContextProvider>
       <App />
-    </userStatus.provider>
+    </ThemeContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

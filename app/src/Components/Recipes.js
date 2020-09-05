@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import firebase from './firebase';
 import {
   // Route,
   NavLink,
 } from "react-router-dom";
+import '../Style/Recipes.css'
+import {ThemeContext} from '../context/themeContext'
 // import Recipe from "./Recipe";
 
 const auth = firebase.auth();
@@ -11,6 +13,9 @@ const db = firebase.firestore();
 const docRef = db.collection("users");
 
 const Recipes = () => {
+
+  const { isLightTheme, light, dark } = useContext(ThemeContext)
+  const theme = isLightTheme? light : dark
   
   const [user, setUser] = useState('')
   const [recipes, setRecipes] = useState(null)
@@ -42,16 +47,18 @@ const Recipes = () => {
     <div className="container">
       <div className="recipes">
         <h2>{user}'s Recipes</h2>
-        <ul>
+        
           {
             recipes &&
             recipes.map( recipes => {
               return (
-                  <li key={recipes.title}><NavLink to='./Recipe'>{recipes.title}</NavLink></li>
+                <div style={{background: theme.bg, color: theme.chars}} className="card-body">
+                  <NavLink style={{color: theme.chars }} to='./Recipe'>{recipes.title}</NavLink>
+                </div>
                   )
                 })
               }
-        </ul>
+        
       </div>
     </div>
   )

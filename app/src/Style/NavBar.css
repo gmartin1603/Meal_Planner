@@ -1,20 +1,11 @@
-html {
-    width: 100%;
-    height: 100%;
-    
-}
-
 header {
     display: flex;
     height: 150px;
     width: 100%;
-    background-color: violet;
     flex-direction: row;
     
     
 }
-
-
 
 .logo, .logo img {
     height: 150px;
@@ -40,17 +31,9 @@ nav a, #message {
     border-top-right-radius: 5px;
     font-size: 20px;
     text-decoration: none;
-    color: #301934;
+    
 }
 
 nav a:hover, .active {
     background-color: white;
 }
-
-
-
-
-
-
-
-
