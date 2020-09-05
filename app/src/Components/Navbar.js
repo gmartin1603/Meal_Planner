@@ -10,7 +10,7 @@ import '../Style/NavBar.css'
 
 
 
-const auth = firebase.auth();
+const auth = firebase.auth()
 
 
 const Navbar = () => {

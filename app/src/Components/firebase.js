@@ -1,4 +1,4 @@
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
@@ -13,12 +13,7 @@ var firebaseConfig = {
     measurementId: "G-3Q8NYX0L7Q"
   };
 // Initialize Firebase
+firebase.initializeApp(firebaseConfig)
 
-class Firebase {
-  constructor() {
-    app.initializeApp(firebaseConfig);
-    this.auth = app.auth()
-    }
-}
 
-export default Firebase;
+export default firebase;
