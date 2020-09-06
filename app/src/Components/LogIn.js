@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom'
 import '../Style/LogIn.css';
-import firebase from './firebase'
+import {Firebase} from './firebase'
+import { AuthContext } from '../context/authContext';
 // import Home from './Home'
 
 
@@ -11,11 +12,11 @@ TODO: Make login form a "popup window"
 TODO: Forgot password link
 */
 
-const auth = firebase.auth();
+
 
 const LogIn = () => {
-
-    const [loggedIn, setLoggedIn] = useState(false)
+    const {toggleLoggedIn, isLoggedIn } = useContext(AuthContext)
+    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -26,21 +27,14 @@ const LogIn = () => {
     
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        auth.signInWithEmailAndPassword(email, password).then(cred => {    
-        }).then( 
-                () => {setLoggedIn(true)
-            })
-        .catch(
-            error => console.log(error)
-        )
-        document.getElementById("email").value = "";
-        document.getElementById("pass").value = "";
+        e.preventDefault()
+        toggleLoggedIn(email, password)
+        
     }
 
     
     //renders form if loggedIn = false
-    if (loggedIn === false){
+    if (isLoggedIn === false){
         return (
             <div className="sign-up-form">
                 <form className="auth-form">

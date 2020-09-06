@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../Style/Home.css';
-import firebase from './firebase'
+import { AuthContext } from '../context/authContext';
 
-const auth = firebase.auth()
+
 
 const Home = (props) => {
   
-  let [loggedIn, setLoggedIn] = useState(false)
-  let [displayName, setDisplayName] = useState('Guest')
+  const {toggleLoggedIn, isLoggedIn, displayName} = useContext(AuthContext)
 
-  useEffect( () => {
-    //checks for user
-    auth.onAuthStateChanged(user => {
-        
-        if (user) {
-            setLoggedIn(true)
-            setDisplayName(user.displayName)
-        }
-        else {
-            return
-        }
-    })
-  })
-  
-      if (loggedIn === true) {
+      if (isLoggedIn === true) {
           return(
             //renders if user is logged in
-            <div className="container">
+            <div className="home-container">
               <h1 id="welcome-message">Welcome {displayName}!</h1>
-
+              <div><p>This is your home screen. Not sure what else.</p></div>
             </div>
           )}
       else {

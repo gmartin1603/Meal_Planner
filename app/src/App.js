@@ -8,12 +8,14 @@ import AddForm from "./Components/Add";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import Recipe from './Components/Recipe';
+import { AuthContextProvider } from './context/authContext';
+
 
 
 const App = () => {
-
-    return (
+  return (
       <BrowserRouter>
+      <AuthContextProvider>
         <div className="App">
           <Navbar/>
           <Route exact path="/" component={Home}/>
@@ -24,6 +26,7 @@ const App = () => {
           <Route path="/SignUp" component={SignUp}/>
           <Route path="/Recipe" component={Recipe}/>
         </div>
+      </AuthContextProvider>
       </BrowserRouter>
     );
   
