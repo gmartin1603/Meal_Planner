@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Home from "./Components/Home";
@@ -8,16 +8,14 @@ import AddForm from "./Components/Add";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import Recipe from './Components/Recipe';
+import { AuthContextProvider } from './context/authContext';
 
-import "./App.css";
 
-class App extends Component {
-  
-  
-  render() {
 
-    return (
+const App = () => {
+  return (
       <BrowserRouter>
+      <AuthContextProvider>
         <div className="App">
           <Navbar/>
           <Route exact path="/" component={Home}/>
@@ -28,9 +26,10 @@ class App extends Component {
           <Route path="/SignUp" component={SignUp}/>
           <Route path="/Recipe" component={Recipe}/>
         </div>
+      </AuthContextProvider>
       </BrowserRouter>
     );
-  }
+  
 }
 
 export default App;

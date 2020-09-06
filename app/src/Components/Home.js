@@ -1,53 +1,31 @@
-import React from 'react';
-import './Home.css';
-import firebase from './firebase'
+import React, { useState, useEffect, useContext } from 'react';
+import '../Style/Home.css';
+import { AuthContext } from '../context/authContext';
 
-const auth = firebase.auth()
 
-class Home extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      loggedIn: false,
-      displayName: '',
-    }
-  }
 
-  componentDidMount(){
-    //checks for user
-    auth.onAuthStateChanged(user => {
-        
-        if (user) {
-            this.setState({
-                loggedIn: true,
-                displayName: user.displayName
-            })
-        }
-        else {
-            return
-        }
-    })
-}
+const Home = (props) => {
+  
+  const {toggleLoggedIn, isLoggedIn, displayName} = useContext(AuthContext)
 
-  render() {
-      if (this.state.loggedIn === true) {
+      if (isLoggedIn === true) {
           return(
             //renders if user is logged in
-            <div className="container">
-              <h1 id="welcome-message">Welcome {this.state.displayName}!</h1>
-
+            <div className="home-container">
+              <h1 id="welcome-message">Welcome {displayName}!</h1>
+              <div><p>This is your home screen. Not sure what else.</p></div>
             </div>
           )}
       else {
           return(
             //renders if no user is logged in
             <div className="home-container">
-              <div id="welcome-message"><h1>Welcome!</h1></div>
+              <div id="welcome-message"><h1>Welcome {displayName}!</h1></div>
               <div><p>This completly free website aims to make meal preping and home cooking easier for everyone!</p></div>
               <div><p>Click on "Sign Up" to create your account and start adding your favorite recipes.</p></div>
             </div> 
           )
       }  
   }
-}
+
 export default Home;

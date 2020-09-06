@@ -1,7 +1,9 @@
-import React from 'react';
-import './LogIn.css';
-import firebase from './firebase'
-import Home from './Home'
+import React, { useState, useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom'
+import '../Style/LogIn.css';
+import {Firebase} from './firebase'
+import { AuthContext } from '../context/authContext';
+// import Home from './Home'
 
 
 /*
@@ -10,72 +12,51 @@ TODO: Make login form a "popup window"
 TODO: Forgot password link
 */
 
-const auth = firebase.auth();
 
-class LogIn extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { 
-            loggedIn: false,
-            email: "",
-            password: "",
-            
-        }
-    }
 
-    componentDidMount() {
+const LogIn = () => {
+    const {toggleLoggedIn, isLoggedIn } = useContext(AuthContext)
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    useEffect( () => {
         document.getElementById("email").focus();
-    }
+    }, [])
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+    
 
-    logIn = (e) => {
-        e.preventDefault();
-        const email = this.state.email;
-        const password = this.state.password;
-        auth.signInWithEmailAndPassword(email, password).then(cred => {    
-        }).then(this.setState({
-            loggedIn: true        
-        }))
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        toggleLoggedIn(email, password)
         
-        .catch(
-            error => console.log(error)
+    }
+
+    
+    //renders form if loggedIn = false
+    if (isLoggedIn === false){
+        return (
+            <div className="sign-up-form">
+                <form className="auth-form">
+                    Email:
+                    <input name="email" id="email" type="email" placeholder="Email" spellCheck='false' onChange={(e) => setEmail(e.target.value)}></input>
+                    Password:
+                    <input name="password" id="pass" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}></input>
+                    <span>
+                        <button type="submit" onClick={handleSubmit}>LogIn!</button>
+                        <a href="Forgot Password" id="forgot-pass">Recover Password</a>
+                    </span>
+
+                </form>
+            </div>
         )
-        document.getElementById("email").value = "";
-        document.getElementById("pass").value = "";
-        
-
-    }
-
-    render() {
-        //renders form if loggedIn = false
-        if (this.state.loggedIn === false){
-            return (
-                <div className="sign-up-form">
-                    <form className="auth-form">
-                        Email:
-                        <input name="email" id="email" type="email" placeholder="Email" onChange={this.handleChange}></input>
-                        Password:
-                        <input name="password" id="pass" type="password" placeholder="Password" onChange={this.handleChange}></input>
-                        <span>
-                            <button type="submit" onClick={this.logIn}>LogIn!</button>
-                            <a href="Forgot Password" id="forgot-pass">Recover Password</a>
-                        </span>
-
-                    </form>
-                </div>
-            )
-        } else {
-            return (
-                //redirect to Home screen
-                <Home></Home>
-            )
-        }
+    } else {
+        return (
+            //redirect to Home screen
+            <Redirect to="/" ></Redirect>
+        )
     }
 }
+
 
 export default LogIn
